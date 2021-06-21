@@ -23,7 +23,7 @@
 
         led_status: status {
 			label = "b1:green:status";
-			gpios = <&gpio 12 GPIO_ACTIVE_LOW>;
+			gpios = <&gpio 15 GPIO_ACTIVE_LOW>;
 		};
 		
         wifi2g {
@@ -39,6 +39,8 @@
 	wan {
 			label = "b1:green:wan";
 			gpios = <&gpio 14 GPIO_ACTIVE_LOW>;   
+			trigger-sources = <&xhci_ehci_port1>, <&ehci_port2>;
+			linux,default-trigger = "usbport";
 		};
 	
         
@@ -55,6 +57,16 @@
         };
        
     };
+    pio_export {
+		compatible = "gpio-export";
+		#size-cells = <0>;
+
+		power_usb3 {
+			gpio-export,name = "power_usb3";
+			gpio-export,output = <1>;
+			gpios = <&gpio 16 GPIO_ACTIVE_HIGH>;
+		};
+	};
   };
 
 &i2c {
